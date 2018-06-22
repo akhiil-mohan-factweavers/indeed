@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f8ce1110-18b3-4c1a-858c-278c4d7a7c2b" name="Default" comment="" />
+    <list default="true" id="f8ce1110-18b3-4c1a-858c-278c4d7a7c2b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/indeed/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/indeed/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/indeed/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/indeed/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/indeed/spiders/indeed.py" beforeDir="false" afterPath="$PROJECT_DIR$/indeed/spiders/indeed.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +19,8 @@
       <file leaf-file-name="indeed.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/indeed/spiders/indeed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="60" lean-forward="true" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="60" />
+            <state relative-caret-position="435">
+              <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -23,20 +28,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/indeed/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="66" column="27" lean-forward="true" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+            <state relative-caret-position="210">
+              <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="items.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="items.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/indeed/items.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="255">
+              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -44,7 +49,7 @@
       <file leaf-file-name="middlewares_ignore.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/indeed/middlewares_ignore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
+            <state relative-caret-position="559">
               <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
@@ -66,7 +71,16 @@
         <entry file="file://$PROJECT_DIR$/scrapy.cfg">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="14" column="21" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="24" />
+              <caret line="14" column="18" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requiremenets.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requiremenets.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -80,6 +94,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -88,24 +105,26 @@
         <option value="$PROJECT_DIR$/indeed/kafka_write.py" />
         <option value="$PROJECT_DIR$/indeed/pipelines.py" />
         <option value="$PROJECT_DIR$/indeed/middlewares.ignore.py" />
+        <option value="$PROJECT_DIR$/requiremenets.txt" />
+        <option value="$PROJECT_DIR$/indeed/spiders/test.py" />
         <option value="$PROJECT_DIR$/indeed/items.py" />
         <option value="$PROJECT_DIR$/indeed/spiders/indeed.py" />
         <option value="$PROJECT_DIR$/indeed/settings.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="55" />
     <option name="y" value="26" />
     <option name="width" value="1287" />
     <option name="height" value="688" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,6 +147,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -168,19 +188,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="-4" width="1311" height="772" extended-state="7" />
+    <frame x="54" y="-11" width="1313" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24456522" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24456522" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32970452" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.281493" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -192,27 +212,75 @@
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="bottom" id="Version Control" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="6" />
-      <window_info anchor="bottom" id="Python Console" order="0" />
-      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Version Control" order="3" show_stripe_button="false" />
       <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Python Console" order="0" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/indeed/spiders/indeed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="60" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="66" column="27" lean-forward="true" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/middlewares_ignore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/pipelines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/indeed/spiders/indeed.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -309,6 +377,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-405" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requiremenets.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/duplicate_filter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/indeed/kafka_write.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -316,35 +406,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/indeed/middlewares.py">
+    <entry file="file://$PROJECT_DIR$/indeed/spiders/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-405" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/indeed/duplicate_filter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/indeed/spiders/indeed.py">
+    <entry file="file://$PROJECT_DIR$/indeed/middlewares_ignore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="60" lean-forward="true" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="60" />
+        <state relative-caret-position="559">
+          <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="21" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -355,27 +430,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/indeed/middlewares_ignore.py">
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="45" column="39" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
+        <state relative-caret-position="210">
+          <caret line="14" column="18" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/indeed/spiders/indeed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/indeed/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="66" column="27" lean-forward="true" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/indeed/items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+        <state relative-caret-position="210">
+          <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
         </state>
       </provider>
     </entry>

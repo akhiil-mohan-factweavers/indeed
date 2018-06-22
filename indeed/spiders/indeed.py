@@ -5,10 +5,11 @@ from urllib.parse import urljoin
 
 class BlogSpider(scrapy.Spider):
 	name = 'indeed'
-	allowed_domains = ['www.glassdoor.co.in/']
-	start_urls = ['https://www.glassdoor.co.in/index.htm']
+	allowed_domains = ['www.indeed.co.in']
+	start_urls = ['https://www.indeed.co.in/']
 
 	def parse(self, response):
+		print('url', response.url)
 		urls = response.xpath('//a/@href').extract()
 		title = response.xpath('//title/text()').extract()
 		h1_tag = response.xpath('//h1/text()').extract()
@@ -27,14 +28,13 @@ class BlogSpider(scrapy.Spider):
 		item['url'] = response.url
 		item['title'] = title
 		item['status'] = response.status
-		item['title'] = title
 		item['h1_tag'] = h1_tag
 		item['h2_tag'] = h2_tag
 		item['p_tag'] = p_tag
 		item['links'] = []
 		for url in urls:
-			if url is not '/':
-				url = urljoin(response.url, url)
-				item['links'].append(url)
-				yield scrapy.Request(url=url, callback=self.parse)
+			url = response.urljoin(url)
+			item['links'].append(url)
+			yield scrapy.Request(url=url, callback=self.parse)
+
 		yield item

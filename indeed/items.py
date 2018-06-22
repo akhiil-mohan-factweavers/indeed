@@ -10,7 +10,12 @@ import scrapy
 
 class IndeedItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    item = scrapy.Field()
-    visit_id = scrapy.Field()
-    visit_status = scrapy.Field()
+    url = scrapy.Field()
+    title = scrapy.Field()
+    h1_tag = scrapy.Field()
+    h2_tag = scrapy.Field()
+    p_tag = scrapy.Field()
+    status = scrapy.Field()
+    links = scrapy.Field()
+
+    #items = scrapy.Field()

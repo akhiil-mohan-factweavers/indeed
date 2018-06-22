@@ -23,7 +23,7 @@ NEWSPIDER_MODULE = 'indeed.spiders'
 #USER_AGENT = 'indeed (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY =False
+ROBOTSTXT_OBEY =True
 EXTENSIONS = {
     'scrapy_kafka_export.KafkaItemExporterExtension': 1,
 }
@@ -79,7 +79,7 @@ SPIDER_MIDDLEWARES = {'indeed.middlewares_ignore.IgnoreVisitedItems': 560}
 #ITEM_PIPELINES = {
 #    'indeed.pipelines.IndeedPipeline': 300,
 #}
-DUPEFILTER_CLASS = 'indeed.duplicate_filter.CustomFilter'
+#DUPEFILTER_CLASS = 'indeed.duplicate_filter.CustomFilter'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
