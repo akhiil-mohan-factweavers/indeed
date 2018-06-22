@@ -17,5 +17,5 @@ class IndeedItem(scrapy.Item):
     p_tag = scrapy.Field()
     status = scrapy.Field()
     links = scrapy.Field()
-
-    #items = scrapy.Field()
+    visit_id = scrapy.Field()
+    visit_status = scrapy.Field()
