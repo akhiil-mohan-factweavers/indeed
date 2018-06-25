@@ -24,12 +24,12 @@ NEWSPIDER_MODULE = 'indeed.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY =True
-EXTENSIONS = {
+'''EXTENSIONS = {
     'scrapy_kafka_export.KafkaItemExporterExtension': 1,
 }
 KAFKA_EXPORT_ENABLED = True
 KAFKA_BROKERS = [config.get('kafka', 'url')]
-KAFKA_TOPIC = config.get('kafka', 'topic')
+KAFKA_TOPIC = config.get('kafka', 'topic')'''
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

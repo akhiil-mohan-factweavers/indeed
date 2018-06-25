@@ -5,8 +5,8 @@ from urllib.parse import urljoin
 
 class BlogSpider(scrapy.Spider):
 	name = 'indeed'
-	allowed_domains = ['www.indeed.co.in']
-	start_urls = ['https://www.indeed.co.in/']
+	allowed_domains = ['www.linkedin.com']
+	start_urls = ['https://www.linkedin.com/']
 
 	def parse(self, response):
 		print('url', response.url)

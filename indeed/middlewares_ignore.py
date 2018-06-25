@@ -28,8 +28,7 @@ class IgnoreVisitedItems(object):
 				if self.FILTER_VISITED in x.meta:
 					visit_id = self._visited_id(x)
 					if visit_id in visited_ids:
-						log.msg("Ignoring already visited: %s" % x.url,
-						        level=log.INFO, spider=spider)
+						log.msg("Ignoring already visited: %s" % x.url,level=log.INFO, spider=spider)
 						visited = True
 			elif isinstance(x, BaseItem):
 				visit_id = self._visited_id(response.request)
