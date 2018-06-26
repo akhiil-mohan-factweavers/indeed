@@ -42,4 +42,4 @@ class IndeedSpider(scrapy.Spider):
                         item['links'].append(url)
                         yield scrapy.Request(url=url, callback=self.parse)
 
-                 yield item
+                yield item
