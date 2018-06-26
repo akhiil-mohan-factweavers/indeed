@@ -1,15 +1,20 @@
 import scrapy
-from scrapy.selector import HtmlXPathSelector
-from urllib.parse import urljoin
 
 
-class BlogSpider(scrapy.Spider):
+class IndeedSpider(scrapy.Spider):
 	name = 'indeed'
-	allowed_domains = ['www.linkedin.com']
-	start_urls = ['https://www.linkedin.com/']
+	allowed_domains = None
+	start_urls = None
+	def __init__(self,start_url=None,allowed_domains =None):
+		if start_url and allowed_domains is not None:
+			self.start_urls =start_url
+			self.allowed_domains = allowed_domains
+
+	def start_requests(self):
+			yield scrapy.Request(url=self.start_urls, callback=self.parse)
+
 
 	def parse(self, response):
-		print('url', response.url)
 		urls = response.xpath('//a/@href').extract()
 		title = response.xpath('//title/text()').extract()
 		h1_tag = response.xpath('//h1/text()').extract()
@@ -37,4 +42,4 @@ class BlogSpider(scrapy.Spider):
 			item['links'].append(url)
 			yield scrapy.Request(url=url, callback=self.parse)
 
-		yield item
+	# yield item

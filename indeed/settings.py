@@ -58,6 +58,8 @@ KAFKA_TOPIC = config.get('kafka', 'topic')'''
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {'indeed.middlewares_ignore.IgnoreVisitedItems': 560}
 
+
+USER_AGENT = 'ClarityBot'
 #SPIDER_MIDDLEWARES = {
 #    'indeed.middlewares.IndeedSpiderMiddleware': 543,
 #}
