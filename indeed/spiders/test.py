@@ -1,18 +1,13 @@
 import scrapy
 
 
-class IndeedSpider(scrapy.Spider):
-	name = 'indeed'
-	allowed_domains = None
-	start_urls = None
-
-	def __init__(self, start_url=None, allowed_domains=None):
-		if start_url and allowed_domains is not None:
-			self.start_urls = start_url
-			self.allowed_domains = allowed_domains
+class TestSpider(scrapy.Spider):
+	name = 'test'
+	allowed_domains = ['www.indeed.co.in']
+	start_urls = 'https://www.indeed.co.in/'
 
 	def start_requests(self):
-		print(self.start_urls, self.allowed_domains)
+		print(type(self.start_urls))
 		yield scrapy.Request(url=self.start_urls, callback=self.parse)
 
 	def parse(self, response):

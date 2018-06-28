@@ -78,9 +78,9 @@ USER_AGENT = 'ClarityBot'
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'indeed.pipelines.IndeedPipeline': 300,
-#}
+ITEM_PIPELINES = {
+  'indeed.pipelines.IndeedPipeline': 300
+}
 #DUPEFILTER_CLASS = 'indeed.duplicate_filter.CustomFilter'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
