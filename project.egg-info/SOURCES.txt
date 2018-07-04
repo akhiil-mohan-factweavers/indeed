@@ -1,0 +1,17 @@
+README.md
+setup.py
+indeed/__init__.py
+indeed/duplicate_filter.py
+indeed/items.py
+indeed/middlewares.py
+indeed/middlewares_ignore.py
+indeed/pipelines.py
+indeed/settings.py
+indeed/spiders/__init__.py
+indeed/spiders/indeed.py
+indeed/spiders/test.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt

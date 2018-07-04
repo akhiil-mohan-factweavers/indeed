@@ -1,0 +1,11 @@
+{ 
+    "sitemap_urls":["https://www.careerbuilder.co.in/sitemapindex.xml"],
+    "website_name":"careerbuilder",
+    "urlPattern" :["https://www.careerbuilder.co.in/jdp/"],
+    "fields" : {
+        "jobtitle" : "h3 pb col big no-mb",
+        "location" : "fl-r fl-n-mobile" ,
+	"company"  : "no-mb" ,
+	"salary"   : "no-wrap"
+    }
+}
