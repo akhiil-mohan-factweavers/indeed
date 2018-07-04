@@ -20,13 +20,11 @@ class MySpider(SitemapSpider):
 		logger.info("intialized the sitemapspider spider")
 		
 	def start_requests(self):
-		print('started careerbuilder url')
 		for sitemap_url in  self.sitemap_urls:
 			self.logger.info("Sitemap parse | url : %s" % sitemap_url)
 			yield scrapy.Request(url=sitemap_url, callback=self._parse_sitemap)
 
 	def parse(self, response):
-		print('started careerbuilder running')
 		logger.info('sitemapspider|url in parse %s',response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
 		response_value = 1
