@@ -1,3 +1,5 @@
 scrapy
 scrapy-kafka-export
 scrapy-redis
+tornado
+bs4

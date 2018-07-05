@@ -10,12 +10,14 @@ def parse_field(crawl_request, response, response_value, tags):
 
 	for url_pattern in crawl_request['urlPattern']:
 		response_value = str(response.url).find(url_pattern)
-		if response_value == 0:
+
+		if response_value > 0:
 			break
-	if response_value == 0:
+	if response_value > 0:
 		try:
 			flag_indeed = 0
 			flag_career = 0
+			flag_jobdiva = 0
 			if crawl_request['spider'] == 'job_scrapper':
 				if soup.find(tags[0], {'class': fields['company']}):
 					item['company'] = soup.find(tags[0], {'class': fields['company']}).text
@@ -55,7 +57,22 @@ def parse_field(crawl_request, response, response_value, tags):
 					item['location'] = soup.find(tags[1], {'class': fields['location']}).text.strip()
 					flag_career = flag_career + 1
 
-			if flag_career > 1 or flag_indeed > 1:
+			elif crawl_request['spider'] == 'jobdiva':
+
+				if soup.find(tags[0], {'style':'text-align:center; vertical-align:top; '}) :
+					job_title = soup.find(tags[0], {'style':'text-align:center; vertical-align:top; '})
+					item['jobtitle']= (job_title.next).strip()
+					flag_jobdiva= flag_jobdiva+1
+
+				if soup.find(tags[1], {'style':'padding-left: 4px; width: 220px; vertical-align:top;'}) :
+					location = soup.find(tags[1], {'style':'padding-left: 4px; width: 220px; vertical-align:top;'})
+					item['location'] = (location.next.next.next.next.next).strip()
+					flag_jobdiva = flag_jobdiva + 1
+
+				if flag_jobdiva>1:
+					item['company'] = 'jobdiva'
+
+			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva >1:
 				item['website_name'] = crawl_request['website_name']
 				item['url'] = response.url
 		except Exception as e:

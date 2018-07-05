@@ -1,0 +1,11 @@
+{
+		"sitemap_urls": ["https://www.jobdiva.com/sitemap.xml"],
+		"website_name": "jobdiva",
+		"urlPattern": ["www1.jobdiva.com/candidates/myjobs"],
+		"spider":"jobdiva",
+		"fields": {
+			"jobtitle": "text-align:center; vertical-align:top; ",
+			"location": "padding-left: 4px; width: 220px; vertical-align:top;"
+		
+		}
+	}

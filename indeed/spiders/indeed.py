@@ -14,7 +14,6 @@ class IndeedSpider(scrapy.Spider):
 	allowed_domains = None
 	start_urls = None
 	crawl_request = None
-	rules = (Rule(LxmlLinkExtractor(allow_domains=allowed_domains), callback='parse', follow=True))
 
 	def __init__(self, crawl_request=None):
 		self.crawl_request = crawl_request
@@ -34,6 +33,7 @@ class IndeedSpider(scrapy.Spider):
 		response_value=1
 		temp = {'urls': []}
 		tags = ['span','b']
+		response_value = -2
 		item = parse_field(self.crawl_request,response,response_value,tags)
 		if len(item)is not 0:
 			yield item

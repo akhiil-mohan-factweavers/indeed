@@ -1,5 +1,5 @@
 {
-    "start_urls":["https://www.indeed.co.in/viewjob?jk=fe464b528a0dc61c&tk=1chhvq26a9517emo&from=serp&alid=3&advn=3921548836650588"],
+    "start_urls":["https://www.indeed.co.in/Government-jobs?vjk=458f646522bf405e"],
     "website_name":"indeed",
     "urlPattern" :["https://www.indeed.co.in/viewjob","https://www.indeed.co.in/cmp/"],
     "fields" : {

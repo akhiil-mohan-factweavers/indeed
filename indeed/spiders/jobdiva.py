@@ -1,37 +1,37 @@
 import scrapy
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
-from scrapy.utils.log import  logger
+from scrapy.utils.log import logger
 from scrapy.spiders import SitemapSpider
 
 from indeed.parse_items import parse_field
 
 
 class MySpider(SitemapSpider):
-	name = 'sitemapspider'
+	name = 'jobdiva'
 	crawl_request = None
-	allowed_domains = ['www.careerbuilder.co.in']
+	allowed_domains = ['www.jobdiva.com','www1.jobdiva.com']
 
 	def __init__(self, crawl_request=None):
 		self.crawl_request = crawl_request
 		if self.crawl_request is not None:
-			self.sitemap_urls = crawl_request.get('sitemap_urls',None)
+			self.sitemap_urls = crawl_request.get('sitemap_urls', None)
 		self.logger.info("Crawl reqquest : %s " % self.crawl_request)
 		super(MySpider, self).__init__()
-		logger.info("intialized the sitemapspider spider")
-		
+		logger.info("intialized the jobdiva spider")
+
 	def start_requests(self):
-		for sitemap_url in  self.sitemap_urls:
+		for sitemap_url in self.sitemap_urls:
 			self.logger.info("Sitemap parse | url : %s" % sitemap_url)
 			yield scrapy.Request(url=sitemap_url, callback=self._parse_sitemap)
 
 	def parse(self, response):
-		logger.info('sitemapspider|url in parse %s',response.url)
+		logger.info('jobdiva|url in parse %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
-		response_value = -2
+		response_value =-2
 		temp = {'urls': []}
-		tags = ['h1', 'div','a']
+		tags = ['span', 'td']
 		item = parse_field(self.crawl_request, response, response_value, tags)
-		if len(item)is not 0:
+		if len(item) is not 0:
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
 			url = response.urljoin(link.url)
