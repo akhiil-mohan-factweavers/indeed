@@ -1,20 +1,21 @@
+import os
+
 from bs4 import BeautifulSoup
 from scrapy.utils.log import  logger
 
 
 def parse_field(crawl_request, response, response_value, tags):
 	item = {}
-
 	fields = crawl_request.get('fields',None)
 	soup = BeautifulSoup(response.text, "html.parser")
-
 	for url_pattern in crawl_request['urlPattern']:
 		response_value = str(response.url).find(url_pattern)
 
-		if response_value > 0:
+		if response_value >= 0:
 			break
-	if response_value > 0:
+	if response_value >= 0:
 		try:
+			print(crawl_request)
 			flag_indeed = 0
 			flag_career = 0
 			flag_jobdiva = 0
