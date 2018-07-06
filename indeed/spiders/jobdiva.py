@@ -27,6 +27,7 @@ class MySpider(SitemapSpider):
 	def parse(self, response):
 		logger.info('jobdiva|url in parse %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
+		self.crawler.stats.set_value('spider', 'jobdiva')
 		response_value =-2
 		temp = {'urls': []}
 		tags = ['span', 'td']
@@ -37,3 +38,4 @@ class MySpider(SitemapSpider):
 			url = response.urljoin(link.url)
 			temp['urls'].append(url)
 			yield scrapy.Request(url=url, callback=self.parse)
+

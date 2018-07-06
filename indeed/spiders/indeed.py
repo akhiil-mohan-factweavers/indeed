@@ -30,7 +30,7 @@ class IndeedSpider(scrapy.Spider):
 	def parse(self, response):
 		logger.info('job_scrapper|url in parse : %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
-		response_value=1
+		self.crawler.stats.set_value('spider','indeed')
 		temp = {'urls': []}
 		tags = ['span','b']
 		response_value = -2

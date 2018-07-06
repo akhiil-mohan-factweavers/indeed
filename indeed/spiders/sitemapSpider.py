@@ -27,6 +27,7 @@ class MySpider(SitemapSpider):
 	def parse(self, response):
 		logger.info('sitemapspider|url in parse %s',response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
+		self.crawler.stats.set_value('spider', 'careerbuilder')
 		response_value = -2
 		temp = {'urls': []}
 		tags = ['h1', 'div','a']
