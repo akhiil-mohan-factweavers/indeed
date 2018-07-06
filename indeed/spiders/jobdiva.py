@@ -41,18 +41,11 @@ class MySpider(SitemapSpider):
 		iframe_url =response.css('iframe::attr(src)').extract()
 
 		for url in iframe_url:
-			print(self.allowed_domains)
 			for allowed_domain in self.allowed_domains:
 				response_value = url.find(allowed_domain)
-				print(response_value)
-				if response_value >= 0 :
-					with open("/home/lenovo/projects_python/indeed_new_1/iframe_url","a") as spider_config_file:
-						spider_config_file.write(url)
-						spider_config_file.write('\n')
-					print('res value',response_value)
+				if response_value >= 0:
 					yield scrapy.Request(url=url, callback=self.parse)
 		if len(item) is not 0:
-			print(item)
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
 
@@ -60,8 +53,7 @@ class MySpider(SitemapSpider):
 			temp['urls'].append(url)
 			yield scrapy.Request(url=url, callback=self.parse)
 
-	def parse_iframe(self,iframe_url):
-		print('loggged in to parse iframe')
+
 
 
 
