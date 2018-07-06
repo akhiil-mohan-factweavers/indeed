@@ -19,6 +19,7 @@ def parse_field(crawl_request, response, response_value, tags):
 			flag_indeed = 0
 			flag_career = 0
 			flag_jobdiva = 0
+			flag_ziprecruter = 0
 			if crawl_request['spider'] == 'job_scrapper':
 				if soup.find(tags[0], {'class': fields['company']}):
 					item['company'] = soup.find(tags[0], {'class': fields['company']}).text
@@ -73,7 +74,21 @@ def parse_field(crawl_request, response, response_value, tags):
 				if flag_jobdiva>1:
 					item['company'] = 'jobdiva'
 
-			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva >1:
+			elif crawl_request['spider'] == 'ziprecruter':
+
+				if soup.find(tags[0], {'class':fields['jobtitle']}) :
+					item['jobtitle'] = soup.find(tags[0], {'class':fields['jobtitle']}).text.strip()
+					flag_ziprecruter= flag_ziprecruter+1
+
+				if soup.find(tags[2], {'itemprop':fields['location']}) :
+					item['location'] = soup.find(tags[2], {'itemprop':fields['location']}).text.strip()
+					flag_ziprecruter = flag_ziprecruter + 1
+
+				if soup.find(tags[1], {'class': fields['company']}):
+					item['company'] = soup.find(tags[1], {'class': fields['company']}).text.strip()
+					flag_ziprecruter = flag_ziprecruter + 1
+
+			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva >1 or flag_ziprecruter >1:
 				item['website_name'] = crawl_request['website_name']
 				item['url'] = response.url
 		except Exception as e:
