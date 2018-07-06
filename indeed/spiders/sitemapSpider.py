@@ -10,6 +10,9 @@ class MySpider(SitemapSpider):
 	name = 'sitemapspider'
 	crawl_request = None
 	allowed_domains = ['www.careerbuilder.co.in']
+	custom_settings = {
+		'CONCURRENT_REQUESTS': 12
+	}
 
 	def __init__(self, crawl_request=None):
 		self.crawl_request = crawl_request

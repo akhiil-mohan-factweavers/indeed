@@ -9,7 +9,11 @@ from indeed.parse_items import parse_field
 class MySpider(SitemapSpider):
 	name = 'jobdiva'
 	crawl_request = None
+	ifram_url = None
 	allowed_domains = ['www.jobdiva.com','www1.jobdiva.com']
+	custom_settings = {
+		'CONCURRENT_REQUESTS' :10
+	}
 
 	def __init__(self, crawl_request=None):
 		self.crawl_request = crawl_request
@@ -24,6 +28,16 @@ class MySpider(SitemapSpider):
 			self.logger.info("Sitemap parse | url : %s" % sitemap_url)
 			yield scrapy.Request(url=sitemap_url, callback=self._parse_sitemap)
 
+	def parse_iframe(self,iframe_url):
+		print('iframe url:::', iframe_url)
+		for url in iframe_url:
+
+			response_value = url in self.allowed_domains
+			print('hai')
+			if response_value>0:
+				print(response_value)
+				yield scrapy.Request(url=url, callback=self.parse)
+
 	def parse(self, response):
 		logger.info('jobdiva|url in parse %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
@@ -32,10 +46,17 @@ class MySpider(SitemapSpider):
 		temp = {'urls': []}
 		tags = ['span', 'td']
 		item = parse_field(self.crawl_request, response, response_value, tags)
+		iframe_url =response.css('iframe::attr(src)').extract()
+		print('iframe url1:::',iframe_url)
+		self.parse_iframe(iframe_url)
+
 		if len(item) is not 0:
+			print(item)
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
+
 			url = response.urljoin(link.url)
 			temp['urls'].append(url)
 			yield scrapy.Request(url=url, callback=self.parse)
+
 
