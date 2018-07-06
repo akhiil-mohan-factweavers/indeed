@@ -12,7 +12,7 @@ class MySpider(SitemapSpider):
 	ifram_url = None
 	allowed_domains = ['www.jobdiva.com','www1.jobdiva.com']
 	custom_settings = {
-		'CONCURRENT_REQUESTS' :10
+		'CONCURRENT_REQUESTS' :7
 	}
 
 	def __init__(self, crawl_request=None):
