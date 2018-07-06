@@ -12,7 +12,7 @@ class MySpider(SitemapSpider):
 	ifram_url = None
 	allowed_domains = ['www.jobdiva.com','www1.jobdiva.com']
 	custom_settings = {
-		'CONCURRENT_REQUESTS' :7
+		'CONCURRENT_REQUESTS':6
 	}
 
 	def __init__(self, crawl_request=None):
@@ -28,15 +28,7 @@ class MySpider(SitemapSpider):
 			self.logger.info("Sitemap parse | url : %s" % sitemap_url)
 			yield scrapy.Request(url=sitemap_url, callback=self._parse_sitemap)
 
-	def parse_iframe(self,iframe_url):
-		print('iframe url:::', iframe_url)
-		for url in iframe_url:
 
-			response_value = url in self.allowed_domains
-			print('hai')
-			if response_value>0:
-				print(response_value)
-				yield scrapy.Request(url=url, callback=self.parse)
 
 	def parse(self, response):
 		logger.info('jobdiva|url in parse %s', response.url)
@@ -47,9 +39,18 @@ class MySpider(SitemapSpider):
 		tags = ['span', 'td']
 		item = parse_field(self.crawl_request, response, response_value, tags)
 		iframe_url =response.css('iframe::attr(src)').extract()
-		print('iframe url1:::',iframe_url)
-		self.parse_iframe(iframe_url)
 
+		for url in iframe_url:
+			print(self.allowed_domains)
+			for allowed_domain in self.allowed_domains:
+				response_value = url.find(allowed_domain)
+				print(response_value)
+				if response_value >= 0 :
+					with open("/home/lenovo/projects_python/indeed_new_1/iframe_url","a") as spider_config_file:
+						spider_config_file.write(url)
+						spider_config_file.write('\n')
+					print('res value',response_value)
+					yield scrapy.Request(url=url, callback=self.parse)
 		if len(item) is not 0:
 			print(item)
 			yield item
@@ -58,5 +59,9 @@ class MySpider(SitemapSpider):
 			url = response.urljoin(link.url)
 			temp['urls'].append(url)
 			yield scrapy.Request(url=url, callback=self.parse)
+
+	def parse_iframe(self,iframe_url):
+		print('loggged in to parse iframe')
+
 
 
