@@ -104,7 +104,6 @@ def getCrawlStatus():
 	global scrapy_response_jobdiv1
 	crawler_status = {}
 	if runner.crawlers is not None:
-		if runner.crawler2.
 		'''scrapy_response_career = crawler.stats.get_stats().copy()
 		total_time = total_time_in_second(scrapy_response_career.get('start_time'))
 		speed = scrapy_response_career['completed_url']/total_time
