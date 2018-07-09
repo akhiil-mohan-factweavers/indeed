@@ -94,3 +94,41 @@ def parse_field(crawl_request, response, response_value, tags):
 		except Exception as e:
 			logger.error('parse_items|spider :%s|error : %s',crawl_request['spider'],e)
 	return item
+
+def parse_links(crawl_request, response, response_value, tags):
+	links = []
+	urlPatterns = crawl_request.get('urlPattern', None)
+	match_value=-2
+	soup = BeautifulSoup(response.text, "html.parser")
+	for urlPattern in urlPatterns:
+		print(urlPattern)
+		for pattern in urlPattern.get('pattern',None):
+			match_value = str(response.url).find(pattern)
+			print(match_value)
+			if pattern =='https://www.indeed.co.in/browsejobs':
+				if pattern == str(response.url):
+					match_value=0
+				else:
+					match_value =-2
+			if match_value >= 0:
+				break
+		if match_value>=0:
+			if urlPattern['followOnly'] =='true':
+				sel_html = soup.find(id=urlPattern['extrackURLFrom'])
+				links_html = sel_html.find_all('a',href =True)
+				for link_html in links_html:
+					links.append(link_html['href'])
+				return {'type':'links','content': links}
+			else:
+				print(urlPatterns)
+				print(crawl_request['spider'])
+				temp_crawl_request = {'fields': urlPattern['fields'],'spider': crawl_request['spider'],'urlPattern':urlPattern['pattern'],'website_name': crawl_request['website_name']}
+				item = {}
+				item = parse_field(temp_crawl_request, response, response_value, tags)
+				print('items::::::::::',item)
+				return {'type':'items','content': item}
+
+
+
+
+
