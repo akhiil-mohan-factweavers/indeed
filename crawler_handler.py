@@ -61,7 +61,7 @@ def startCrawl():
 		deferred =runner.crawl(currentJob['spider'], currentJob)
 
 		logger.info('indeed job added')
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/career_builder",
+		'''with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/career_builder",
 		          "r") as spider_config_file:
 			crawl_request = spider_config_file.read().replace('\n', '')
 		crawl_request_json = json.loads(str(crawl_request))
@@ -98,19 +98,19 @@ def startCrawl():
 
 		deferred = runner.crawl(currentJob['spider'], currentJob)
 
-		logger.info('ziprecruter job added')
-
+		logger.info('ziprecruter job added')'''
 
 		d = runner.join()
 		d.addBoth(lambda _: reactor.stop())
 		threading._start_new_thread(reactor.run, ((),))
+
 		crawl_state = "RUNNING"
 		if list(runner.crawlers):
 			print(runner.crawlers)
 			crawler = list(runner.crawlers)[0]
-			crawler1 =list(runner.crawlers)[1]
+			'''crawler1 =list(runner.crawlers)[1]
 			crawler2 = list(runner.crawlers)[2]
-			crawler3 = list(runner.crawlers)[3]
+			crawler3 = list(runner.crawlers)[3]'''
 
 	except Exception as e:
 		logger.error('crawler handler|spider : %s|error : %s',crawl_request['spider'],e)
@@ -131,7 +131,7 @@ def getCrawlStatus():
 	if runner.crawlers is not None:
 
 
-		if 'finish_time' in crawler2.stats.get_stats().keys():
+		'''if 'finish_time' in crawler2.stats.get_stats().keys():
 			temp_response = scrapy_response_jobdiv1.copy()
 			current_time = crawler2.stats.get_stats()['finish_time']
 			total_time = total_time_in_second(temp_response.get('start_time'), current_time)
@@ -151,7 +151,7 @@ def getCrawlStatus():
 			scrapy_response_jobdiv['speed'] = speed
 			scrapy_response_jobdiv['start_time'] = str(scrapy_response_jobdiv.get('start_time'))
 			scrapy_response_jobdiv['status']='RUNNING'
-			crawler_status[scrapy_response_jobdiv['spider']] = scrapy_response_jobdiv
+			crawler_status[scrapy_response_jobdiv['spider']] = scrapy_response_jobdiv'''
 
 
 		if 'finish_time' in crawler.stats.get_stats().keys():
@@ -177,7 +177,7 @@ def getCrawlStatus():
 			scrapy_response_indeed['status']='RUNNING'
 			crawler_status[scrapy_response_indeed['spider']] = scrapy_response_indeed
 
-		if 'finish_time' in crawler1.stats.get_stats().keys():
+		'''if 'finish_time' in crawler1.stats.get_stats().keys():
 
 			temp_response = scrapy_response_career1.copy()
 			current_time = crawler1.stats.get_stats()['finish_time']
@@ -223,7 +223,7 @@ def getCrawlStatus():
 			scrapy_response_zip['speed'] = speed
 			scrapy_response_zip['start_time'] = str(scrapy_response_zip.get('start_time'))
 			scrapy_response_zip['status'] = 'RUNNING'
-			crawler_status[scrapy_response_zip['spider']] = scrapy_response_zip
+			crawler_status[scrapy_response_zip['spider']] = scrapy_response_zip'''
 
 
 	else:
