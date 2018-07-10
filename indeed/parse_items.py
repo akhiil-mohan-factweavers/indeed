@@ -122,11 +122,11 @@ def parse_links(crawl_request, response, response_value, tags):
 					for sel_html in sel_htmls:
 						links.append(sel_html.a['href'])
 
-					'''pagination = soup.find('div', {'class': 'pagination'})
+					pagination = soup.find('div', {'class': 'pagination'})
 					links_html = pagination.find_all('a', href=True)
 					for link_html in links_html:
 						if link_html['href'] not in links:
-							links.append(link_html['href'])'''
+							links.append(link_html['href'])
 				else:
 					sel_html = soup.find(id=urlPattern['extrackURLFrom'])
 					links_html = sel_html.find_all('a', href=True)
