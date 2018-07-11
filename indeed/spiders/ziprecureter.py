@@ -35,7 +35,7 @@ class ZiprecruterSpider(scrapy.Spider):
 		self.crawler.stats.inc_value('completed_url', 1)
 		self.crawler.stats.set_value('spider','ziprecruter')
 		temp = {'urls': []}
-		tags = ['h1','a','span']
+		tags = ['h1','a','span','div']
 		response_value = -2
 		parse_response = parse_links(self.crawl_request, response, response_value, tags)
 		print(parse_response)

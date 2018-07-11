@@ -15,11 +15,11 @@ def parse_field(crawl_request, response, response_value, tags):
 			break
 	if response_value >= 0:
 		try:
-			print(crawl_request)
 			flag_indeed = 0
 			flag_career = 0
 			flag_jobdiva = 0
 			flag_ziprecruter = 0
+
 			if crawl_request['spider'] == 'job_scrapper':
 				if soup.find(tags[0], {'class': fields['company']}):
 					item['company'] = soup.find(tags[0], {'class': fields['company']}).text
@@ -35,6 +35,10 @@ def parse_field(crawl_request, response, response_value, tags):
 
 				if soup.find(tags[0], {'class': fields['salary']}):
 					item['salary'] = soup.find(tags[0], {'class': fields['salary']}).text.strip()
+					flag_indeed = flag_indeed + 1
+
+				if soup.find(tags[2], {'class':fields['companydes']}):
+					item['company_description']=soup.find(tags[2], {'class':fields['companydes']}).text.strip()
 					flag_indeed = flag_indeed + 1
 
 
@@ -53,6 +57,10 @@ def parse_field(crawl_request, response, response_value, tags):
 				if soup.find(tags[1], {'class': fields['location']}):
 					item['location'] = soup.find(tags[1],
 					                             {'class': fields['location']}).text.strip()
+					flag_career = flag_career + 1
+
+				if soup.find(tags[1], {'class':fields['jobtype']}):
+					item['jobtype'] = soup.find('div', {'class':'fl-l fl-n-mobile'}).text.strip()
 					flag_career = flag_career + 1
 
 			elif crawl_request['spider'] == 'jobdiva':
@@ -89,7 +97,17 @@ def parse_field(crawl_request, response, response_value, tags):
 					item['company'] = soup.find(tags[1], {'class': fields['company']}).text.strip()
 					flag_ziprecruter = flag_ziprecruter + 1
 
+				if soup.find(tags[3], {'class':fields['companydes']}):
+					compnydes = soup.find(tags[3], {'class':fields['companydes']})
+					item['company_description']=compnydes.find('p').text
+					flag_ziprecruter = flag_ziprecruter + 1
+
+				if soup.find(tags[2], {'class':fields['jobtype']}):
+					item['jobtype']=soup.find(tags[2], {'class':fields['jobtype']}).text.strip()
+					flag_ziprecruter = flag_ziprecruter + 1
+
 			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva > 1 or flag_ziprecruter > 1:
+				print('inserted this function')
 				item['website_name'] = crawl_request['website_name']
 				item['url'] = response.url
 		except Exception as e:
@@ -122,12 +140,12 @@ def parse_links(crawl_request, response, response_value, tags):
 					for sel_html in sel_htmls:
 						links.append(sel_html.a['href'])
 
-					if crawl_request['spider']=='job_scrapper':
+					'''if crawl_request['spider']=='job_scrapper':
 						pagination = soup.find('div', {'class': 'pagination'})
 						links_html = pagination.find_all('a', href=True)
 						for link_html in links_html:
 							if link_html['href'] not in links:
-								links.append(link_html['href'])
+								links.append(link_html['href'])'''
 				else:
 					sel_html = soup.find(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
 					links_html = sel_html.find_all('a', href=True)
