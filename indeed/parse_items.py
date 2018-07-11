@@ -122,11 +122,12 @@ def parse_links(crawl_request, response, response_value, tags):
 					for sel_html in sel_htmls:
 						links.append(sel_html.a['href'])
 
-					'''pagination = soup.find('div', {'class': 'pagination'})
-					links_html = pagination.find_all('a', href=True)
-					for link_html in links_html:
-						if link_html['href'] not in links:
-							links.append(link_html['href'])'''
+					if crawl_request['spider']=='job_scrapper':
+						pagination = soup.find('div', {'class': 'pagination'})
+						links_html = pagination.find_all('a', href=True)
+						for link_html in links_html:
+							if link_html['href'] not in links:
+								links.append(link_html['href'])
 				else:
 					sel_html = soup.find(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
 					links_html = sel_html.find_all('a', href=True)
