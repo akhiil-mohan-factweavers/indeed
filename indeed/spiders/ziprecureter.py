@@ -31,10 +31,6 @@ class ZiprecruterSpider(scrapy.Spider):
 			yield scrapy.Request(url=url, callback=self.parse)
 
 	def parse(self, response):
-		with open('/home/lenovo/projects_python/indeed/career.txt', 'a') as myfile:
-			myfile.write(response.url)
-			myfile.write('\n')
-
 		logger.info('job_scrapper|url in parse : %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
 		self.crawler.stats.set_value('spider','ziprecruter')
