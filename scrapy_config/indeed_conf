@@ -1,11 +1,41 @@
 {
-    "start_urls":["https://www.indeed.co.in/Government-jobs?vjk=458f646522bf405e"],
-    "website_name":"indeed",
-    "urlPattern" :["https://www.indeed.co.in/viewjob","https://www.indeed.co.in/cmp/"],
-    "fields" : {
-        "jobtitle" : "jobtitle",
-        "location" : "location" ,
-	    "company"  : "company" ,
-	    "salary"   : "no-wrap"
-    }
+   "start_urls":["https://www.indeed.co.in/browsejobs"],
+   "website_name":"indeed",
+   "urlPattern" : [ 
+    {
+	    "jobpage" :"no",
+            "pattern" : ["https://www.indeed.co.in/browsejobs"],
+            "followOnly" : "true",
+            "extrackURLFrom" : "states",
+            "css-sel":"table",
+	    "tag-name":"id"
+   },
+   {
+	    "jobpage" :"no",
+            "pattern" :["https://www.indeed.co.in/browsejobs/in/"],
+            "followOnly" : "true",
+            "extrackURLFrom" : "cities",
+	    "css-sel":"table",
+	    "tag-name":"id"
+   },
+   {
+	    "jobpage" :"yes",
+            "pattern" :["https://www.indeed.co.in/jobs"],
+            "followOnly" :"true",
+            "extrackURLFrom" :  "jobtitle",
+	    "css-sel":"h2",
+	    "tag-name":"class"
+   },
+   {
+	    "jobpage" :"no",
+            "pattern" : ["https://www.indeed.co.in/viewjob" ,"https://www.indeed.co.in/cmp/"],
+            "followOnly" :"false",
+              "fields" : {
+                     "jobtitle" : "jobtitle",
+                     "location" : "location" ,
+                      "company" : "company" ,
+                      "salary"  : "no-wrap"
+         }
+   }
+ ]
 }

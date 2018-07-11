@@ -11,7 +11,7 @@ class MySpider(SitemapSpider):
 	crawl_request = None
 	allowed_domains = ['www.careerbuilder.co.in']
 	custom_settings = {
-		'CONCURRENT_REQUESTS': 7
+		'CONCURRENT_REQUESTS': 10
 	}
 
 	def __init__(self, crawl_request=None):
@@ -39,5 +39,5 @@ class MySpider(SitemapSpider):
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
 			url = response.urljoin(link.url)
-			temp['urls'].append(url)
-			yield scrapy.Request(url=url, callback=self.parse)
+			if str(url).find(self.crawl_request['urlPattern'][0])>=0:
+				yield scrapy.Request(url=url, callback=self.parse)
