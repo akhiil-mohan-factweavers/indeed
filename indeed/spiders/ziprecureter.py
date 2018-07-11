@@ -5,7 +5,7 @@ from pip.utils import logging
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy.spiders import Rule
 from scrapy_redis.spiders import RedisSpider
-from indeed.parse_items import parse_field
+from indeed.parse_items import parse_field, parse_links
 from scrapy.utils.log import logger
 
 
@@ -15,7 +15,7 @@ class ZiprecruterSpider(scrapy.Spider):
 	start_urls = None
 	crawl_request = None
 	custom_settings = {
-		'CONCURRENT_REQUESTS': 7
+		'CONCURRENT_REQUESTS': 10
 	}
 
 	def __init__(self, crawl_request=None):
@@ -31,17 +31,26 @@ class ZiprecruterSpider(scrapy.Spider):
 			yield scrapy.Request(url=url, callback=self.parse)
 
 	def parse(self, response):
+		with open('/home/lenovo/projects_python/indeed/career.txt', 'a') as myfile:
+			myfile.write(response.url)
+			myfile.write('\n')
+
 		logger.info('job_scrapper|url in parse : %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
 		self.crawler.stats.set_value('spider','ziprecruter')
 		temp = {'urls': []}
 		tags = ['h1','a','span']
 		response_value = -2
-		item = parse_field(self.crawl_request,response,response_value,tags)
-		if len(item)is not 0:
-			print(item)
-			yield item
-		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
-			url = response.urljoin(link.url)
-			temp['urls'].append(url)
-			yield scrapy.Request(url=url, callback=self.parse)
+		parse_response = parse_links(self.crawl_request, response, response_value, tags)
+		print(parse_response)
+		if parse_response is not None:
+			if parse_response['type'] == 'links':
+				links = parse_response.get('content')
+				for link in links:
+					url = response.urljoin(link)
+					yield scrapy.Request(url=url, callback=self.parse)
+
+			else:
+				item = parse_response.get('content')
+				if len(item) is not 0:
+					yield item

@@ -117,18 +117,18 @@ def parse_links(crawl_request, response, response_value, tags):
 				break
 		if match_value >= 0:
 			if urlPattern['followOnly'] == 'true':
-				if pattern == 'https://www.indeed.co.in/jobs':
-					sel_htmls = soup.find_all('h2', {'class': 'jobtitle'})
+				if urlPattern['jobpage']=='yes':
+					sel_htmls = soup.find_all(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
 					for sel_html in sel_htmls:
 						links.append(sel_html.a['href'])
 
-					pagination = soup.find('div', {'class': 'pagination'})
+					'''pagination = soup.find('div', {'class': 'pagination'})
 					links_html = pagination.find_all('a', href=True)
 					for link_html in links_html:
 						if link_html['href'] not in links:
-							links.append(link_html['href'])
+							links.append(link_html['href'])'''
 				else:
-					sel_html = soup.find(id=urlPattern['extrackURLFrom'])
+					sel_html = soup.find(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
 					links_html = sel_html.find_all('a', href=True)
 					for link_html in links_html:
 						links.append(link_html['href'])
