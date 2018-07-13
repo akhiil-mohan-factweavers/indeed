@@ -20,6 +20,7 @@
    },
    {
 	    "jobpage" :"yes",
+	    "direct_links":"no",
             "pattern" :["https://www.indeed.co.in/jobs"],
             "followOnly" :"true",
             "extrackURLFrom" :  "jobtitle",
@@ -34,7 +35,8 @@
                      "jobtitle" : "jobtitle",
                      "location" : "location" ,
                       "company" : "company" ,
-                      "salary"  : "no-wrap"
+                      "salary"  : "no-wrap",
+		      "summary" : "summary"
          }
    }
  ]

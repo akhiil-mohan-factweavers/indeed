@@ -1,0 +1,43 @@
+{
+   "start_urls":["https://www.ziprecruiter.com/browse/states"],
+   "website_name":"ziprecruiter",
+   "urlPattern" : [ 
+    {
+	    "jobpage" :"no",
+            "pattern" : ["https://www.ziprecruiter.com/browse/states"],
+            "followOnly" : "true",
+            "extrackURLFrom" : "list",
+            "css-sel":"ul",
+	    "tag-name":"class"
+   },
+   {
+            "jobpage" :"no",
+            "pattern" :["https://www.ziprecruiter.com/browse/cities?loc="],
+            "followOnly" : "true",
+            "extrackURLFrom" : "list",
+            "css-sel":"ul",
+	    "tag-name":"class"
+   },
+   {
+            "jobpage" :"no",
+            "pattern" : ["https://www.ziprecruiter.com/jobs/"],
+            "followOnly" :"false",
+             "fields" : {
+        		"jobtitle" : "job_title",
+        		"location" : "address" ,
+	 		"company" : "job_details_link",
+		        "companydes":"companyDescriptionSection",
+			"jobtype" : "t_employment_type"
+			 }
+   },
+   {
+	    "jobpage" :"yes",
+	    "direct_links":"no",
+            "pattern" :["https://www.ziprecruiter.com/Jobs/-in-"],
+            "followOnly" :"true",
+            "extrackURLFrom" : "job_content",
+            "css-sel":"div",
+	    "tag-name":"class"
+   }
+]
+}

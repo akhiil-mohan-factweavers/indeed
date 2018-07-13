@@ -15,7 +15,7 @@ class IndeedSpider(scrapy.Spider):
 	start_urls = None
 	crawl_request = None
 	custom_settings = {
-		'CONCURRENT_REQUESTS': 10
+		'CONCURRENT_REQUESTS': 8
 	}
 
 	def __init__(self, crawl_request=None):

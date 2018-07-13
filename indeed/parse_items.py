@@ -1,5 +1,6 @@
 import datetime
 import os
+import re
 import urllib
 
 import scrapy
@@ -22,6 +23,7 @@ def parse_field(crawl_request, response, response_value, tags):
 			flag_career = 0
 			flag_jobdiva = 0
 			flag_ziprecruter = 0
+			flag_dice = 0
 
 			if crawl_request['spider'] == 'job_scrapper':
 				if soup.find(tags[0], {'class': fields['company']}):
@@ -39,28 +41,14 @@ def parse_field(crawl_request, response, response_value, tags):
 				if soup.find(tags[0], {'class': fields['salary']}):
 					item['salary'] = soup.find(tags[0], {'class': fields['salary']}).text.strip()
 					flag_indeed = flag_indeed + 1
-				if soup.find('span', {'class':'date'}):
-					item['date_of_job_posted']=soup.find('span', {'class':'date'}).text.strip()
+				if soup.find('span', {'class': 'date'}):
+					item['date_of_job_posted'] = soup.find('span', {'class': 'date'}).text.strip()
 					flag_indeed = flag_indeed + 1
 
-				'''if soup.find(tags[2], {'class':fields['companydes']}):
-					companyreview =soup.find(tags[2], {'class':fields['companydes']})
-					if companyreview.find('a',href=True):
-						link = companyreview.find('a',href=True)['href']
-						comp_url = response.urljoin(link)
-						companyreview=url_lib_request(comp_url)
-						if companyreview.find('span', {'class': 'cmp-header-rating-average'}):
-							CompanyRating=companyreview.find('span', {'class': 'cmp-header-rating-average'}).text
-							item['MYC-CompanyRating']=CompanyRating
-							flag_indeed = flag_indeed + 1
-						if companyreview.soup.find('li', {'class':'cmp-menu--reviews'}):
-							review_link = soup.find('li', {'class':'cmp-menu--reviews'})
-							if review_link.find('a',href=True):
-								link = review_link.find('a', href=True)['href']
-								link = response.urljoin(link)
-								review = url_lib_request(link)'''
-
-
+				'''if soup.find(tags[0],{'class':fields['summary']}):
+					job_summary = soup.find(tags[0], {'class':fields['summary']})
+					print(job_summary)
+					item,flag_indeed = parse_job_summary(job_summary=job_summary, item=item,flag = flag_indeed)'''
 
 			elif crawl_request['spider'] == 'sitemapspider':
 
@@ -79,13 +67,13 @@ def parse_field(crawl_request, response, response_value, tags):
 					                             {'class': fields['location']}).text.strip()
 					flag_career = flag_career + 1
 
-				if soup.find(tags[1], {'class':fields['jobtype']}):
-					item['jobtype'] = soup.find('div', {'class':'fl-l fl-n-mobile'}).text.strip()
+				if soup.find(tags[1], {'class': fields['jobtype']}):
+					item['jobtype'] = soup.find('div', {'class': 'fl-l fl-n-mobile'}).text.strip()
 					flag_career = flag_career + 1
 
 				if soup.find('a', {'class': 'btn btn-apply'}):
-					apply_link = soup.find('a', {'class':'btn btn-apply'})['href']
-					item['Link/Mechanism_to_apply_the_job']=response.urljoin(apply_link)
+					apply_link = soup.find('a', {'class': 'btn btn-apply'})['href']
+					item['Link/Mechanism_to_apply_the_job'] = response.urljoin(apply_link)
 					flag_career = flag_career + 1
 
 			elif crawl_request['spider'] == 'jobdiva':
@@ -122,22 +110,48 @@ def parse_field(crawl_request, response, response_value, tags):
 					item['company'] = soup.find(tags[1], {'class': fields['company']}).text.strip()
 					flag_ziprecruter = flag_ziprecruter + 1
 
-				if soup.find(tags[3], {'class':fields['companydes']}):
-					compnydes = soup.find(tags[3], {'class':fields['companydes']})
-					item['company_description']=compnydes.find('p').text.strip()
+				if soup.find(tags[3], {'class': fields['companydes']}):
+					compnydes = soup.find(tags[3], {'class': fields['companydes']})
+					item['company_description'] = compnydes.find('p').text.strip()
 					flag_ziprecruter = flag_ziprecruter + 1
 
-				if soup.find(tags[2], {'class':fields['jobtype']}):
-					item['jobtype']=soup.find(tags[2], {'class':fields['jobtype']}).text.strip()
+				if soup.find(tags[2], {'class': fields['jobtype']}):
+					item['jobtype'] = soup.find(tags[2], {'class': fields['jobtype']}).text.strip()
 					flag_ziprecruter = flag_ziprecruter + 1
 
-				if soup.find('span', {'class':'data'}):
-					item['date_of_job_posted']=soup.find('span', {'class':'data'}).text.strip()
+				if soup.find('span', {'class': 'data'}):
+					item['date_of_job_posted'] = soup.find('span', {'class': 'data'}).text.strip()
 					flag_ziprecruter = flag_ziprecruter + 1
 
-			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva > 1 or flag_ziprecruter > 1:
+			elif crawl_request['spider'] == 'Dice':
+
+				if soup.find(tags[0], {'class': fields['jobtitle']}):
+					item['jobtitle'] = soup.find(tags[0],
+					                             {'class': fields['jobtitle']}).text.strip()
+					flag_dice = flag_dice + 1
+
+				if soup.find(tags[1], {'class': fields['location']}):
+					item['location'] = soup.find(tags[1],
+					                             {'class': fields['location']}).text.strip()
+					flag_dice = flag_dice + 1
+
+				if soup.find(tags[2], {'itemprop': fields['company']}):
+					item['company'] = soup.find(tags[2],
+					                            {'itemprop': fields['company']}).text.strip()
+					flag_dice = flag_dice + 1
+
+				if soup.find(tags[3], {'class': fields['job_add_time']}):
+					item['date_of_job_posted'] = soup.find(tags[3], {
+						'class': fields['job_add_time']}).text.strip()
+					flag_dice = flag_dice + 1
+
+				if soup.find(tags[4], {'id': fields['posted_by']}):
+					item['posted_by'] = soup.find(tags[4], {'id': fields['posted_by']}).text.strip()
+					flag_dice = flag_dice + 1
+
+			if flag_career > 1 or flag_indeed > 1 or flag_jobdiva > 1 or flag_ziprecruter > 1 or flag_dice > 1:
 				item['website_name'] = crawl_request['website_name']
-				item['date_of_scraped']=str(datetime.datetime.utcnow())
+				item['date_of_scraped'] = str(datetime.datetime.utcnow())
 				item['url'] = response.url
 		except Exception as e:
 			logger.error('parse_items|spider :%s|error : %s', crawl_request['spider'], e)
@@ -164,18 +178,27 @@ def parse_links(crawl_request, response, response_value, tags):
 				break
 		if match_value >= 0:
 			if urlPattern['followOnly'] == 'true':
-				if urlPattern['jobpage']=='yes':
-					sel_htmls = soup.find_all(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
+				if urlPattern['jobpage'] == 'yes':
+					sel_htmls = soup.find_all(urlPattern['css-sel'], {
+						urlPattern['tag-name']: urlPattern['extrackURLFrom']})
 					for sel_html in sel_htmls:
-						links.append(sel_html.a['href'])
-					if crawl_request['spider']=='job_scrapper':
+							if urlPattern['direct_links'] == 'no':
+								a_tag = sel_html.find('a')
+								if a_tag is not None:
+									links.append(sel_html.a['href'])
+							else:
+								links.append(sel_html['href'])
+
+
+					if crawl_request['spider'] == 'job_scrapper':
 						pagination = soup.find('div', {'class': 'pagination'})
 						links_html = pagination.find_all('a', href=True)
 						for link_html in links_html:
 							if link_html['href'] not in links:
 								links.append(link_html['href'])
 				else:
-					sel_html = soup.find(urlPattern['css-sel'],{urlPattern['tag-name']:urlPattern['extrackURLFrom']})
+					sel_html = soup.find(urlPattern['css-sel'],
+					                     {urlPattern['tag-name']: urlPattern['extrackURLFrom']})
 					links_html = sel_html.find_all('a', href=True)
 					for link_html in links_html:
 						links.append(link_html['href'])
@@ -191,7 +214,29 @@ def parse_links(crawl_request, response, response_value, tags):
 				print('items::::::::::', item)
 				return {'type': 'items', 'content': item}
 
+
 def url_lib_request(url):
 	respose = urllib.urlopen(url)
 	soup = BeautifulSoup(respose)
 	return soup
+
+
+def parse_job_summary(job_summary, item, flag):
+	job_summary_contents = job_summary.find_all()
+	for job_summary_content in job_summary_contents:
+		print(job_summary_content)
+		item = parse_pattern(job_summary_content.text, pattern='Job Type:', index_name='job_type', item=item,
+		                     flag=flag)
+		item = parse_pattern(job_summary_content.text, pattern='Qualification:', index_name='Qualification',
+		                     item=item, flag=flag)
+		item = parse_pattern(job_summary_content.text, pattern='Work Experience:', index_name='Work_Experience',
+		                     item=item, flag=flag)
+	return item, flag
+
+
+def parse_pattern(job_summary_content, pattern, index_name, item, flag):
+	match_res = re.match(r"^" + pattern + "\s?(.*)", job_summary_content, re.IGNORECASE)
+	if match_res:
+		item[index_name] = match_res.group(1).strip()
+		flag = flag
+	return item, flag
