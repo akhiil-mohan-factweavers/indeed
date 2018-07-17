@@ -3,7 +3,7 @@ from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy.utils.log import logger
 from scrapy.spiders import SitemapSpider
 
-from indeed.parse_items import parse_field
+from indeed.parse_items import  parse_fields
 
 
 class MySpider(SitemapSpider):
@@ -37,7 +37,7 @@ class MySpider(SitemapSpider):
 		response_value =-2
 		temp = {'urls': []}
 		tags = ['span', 'td']
-		item = parse_field(self.crawl_request, response, response_value, tags)
+		item = parse_fields(self.crawl_request, response, response_value, tags)
 		iframe_url =response.css('iframe::attr(src)').extract()
 
 		for url in iframe_url:

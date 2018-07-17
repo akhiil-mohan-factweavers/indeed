@@ -26,9 +26,14 @@
         		"jobtitle" : "job_title",
         		"location" : "address" ,
 	 		"company" : "job_details_link",
-		        "companydes":"companyDescriptionSection",
-			"jobtype" : "t_employment_type"
-			 }
+			"salary"  : "not given",
+			"posted_date":"not given",
+		        "summary" : "summary",
+			"jobtype" : "t_employment_type",
+			"posted_by":"not given",
+			"applylink":"not given"
+			 },
+	    "tags_name" : ["class","class","itemprop","class","class","class","class","class"]
    },
    {
 	    "jobpage" :"yes",

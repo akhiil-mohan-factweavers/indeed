@@ -3,7 +3,7 @@ from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy.utils.log import  logger
 from scrapy.spiders import SitemapSpider
 
-from indeed.parse_items import parse_field
+from indeed.parse_items import  parse_fields
 
 
 class MySpider(SitemapSpider):
@@ -33,9 +33,13 @@ class MySpider(SitemapSpider):
 		self.crawler.stats.set_value('spider', 'careerbuilder')
 		response_value = -2
 		temp = {'urls': []}
-		tags = ['h1', 'div','a']
-		item = parse_field(self.crawl_request, response, response_value, tags)
+
+		tags = ['a','h1','div','div','span','div','a','h4']
+
+		item = parse_fields(self.crawl_request, response, response_value, tags)
 		if len(item)is not 0:
+			item['company'] = item['company'].split("posted by ", 1)[1]
+			item['jobtitle'] = item['jobtitle'].split("\n", 1)[0]
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):
 			url = response.urljoin(link.url)

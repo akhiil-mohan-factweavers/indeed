@@ -5,8 +5,19 @@
     "fields" : {
         "jobtitle" : "h3 pb col big no-mb",
         "location" : "fl-r fl-n-mobile" ,
-	"company"  : "no-mb" 
-    }
+	"company"  : "no-mb",
+	"jobtype"  : "fl-l fl-n-mobile",
+	"applylink": "btn btn-apply",
+	"salary"  : "not given",
+	"posted_date":"not given",
+	"posted_by":"not given",
+	"summary" : "summary"
+
+    },
+    "tags_name" : ["class","class","class","class","class","class","class","class"]
 }
+
+
+
 
 

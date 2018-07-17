@@ -5,7 +5,7 @@ from pip.utils import logging
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy.spiders import Rule
 from scrapy_redis.spiders import RedisSpider
-from indeed.parse_items import parse_field, parse_links
+from indeed.parse_items import  parse_links
 from scrapy.utils.log import logger
 
 
@@ -36,7 +36,7 @@ class IndeedSpider(scrapy.Spider):
 		self.crawler.stats.inc_value('completed_url', 1)
 		self.crawler.stats.set_value('spider','indeed')
 
-		tags = ['span','b','div']
+		tags = ['span','b','span','span','span','div','a','h4']
 		response_value = -2
 		parse_response = parse_links(self.crawl_request, response, response_value, tags)
 		print(parse_response)

@@ -11,6 +11,12 @@ import datetime
 from scrapy.utils.log import configure_logging
 from indeed import settings as my_settings
 from indeed.util.util import total_time_in_second
+import configparser
+
+config = configparser.RawConfigParser()
+config.read('scrapy.cfg')
+path = config.get('configPath', 'path')
+
 
 process = None
 starting_url = None
@@ -31,6 +37,7 @@ scrapy_response_zip1 = None
 scrapy_response_zip = None
 scrapy_response_dice1 = None
 scrapy_response_dice = None
+
 def startCrawl():
 	global process
 	global starting_url
@@ -47,78 +54,14 @@ def startCrawl():
 	crawler_settings.setmodule(my_settings)
 	runner = CrawlerRunner(settings=crawler_settings)
 	configure_logging()
+
 	try:
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/indeed_conf",
-		          "r") as spider_config_file:
-			crawl_request = spider_config_file.read().replace('\n', '')
-		updated_request_json = {}
-		crawl_request_json = json.loads(str(crawl_request))
-		crawl_request_json['allowed_domains'] = []
-		if 'start_urls' in crawl_request_json and crawl_request_json['start_urls'] is not None:
-			for url in crawl_request_json['start_urls']:
-				updated_request_json = parse_domain(url, crawl_request_json)
-			crawl_request_json['spider'] = 'job_scrapper'
-		print(updated_request_json)
-		currentJob = updated_request_json
+		add_spider_to_job("indeed_conf",'job_scrapper')
+		add_spider_to_job("ziprecruter", 'ziprecruter')
+		add_spider_to_job("career_builder",'sitemapspider')
+		add_spider_to_job("dice", 'Dice')
 
-		deferred =runner.crawl(currentJob['spider'], currentJob)
 
-		logger.info('indeed job added')
-		
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/career_builder",
-		          "r") as spider_config_file:
-			crawl_request = spider_config_file.read().replace('\n', '')
-		crawl_request_json = json.loads(str(crawl_request))
-		crawl_request_json['spider'] = 'sitemapspider'
-		print(crawl_request_json)
-		currentJob = crawl_request_json
-
-		deferred =runner.crawl(currentJob['spider'], currentJob)
-
-		logger.info('career builder job added')
-
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/jobdiva","r") as spider_config_file:
-			crawl_request = spider_config_file.read().replace('\n', '')
-		crawl_request_json = json.loads(str(crawl_request))
-		crawl_request_json['spider'] = 'jobdiva'
-		print(crawl_request_json)
-		currentJob = crawl_request_json
-
-		deferred = runner.crawl(currentJob['spider'], currentJob)
-
-		logger.info('jobdiva job added')
-
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/ziprecruter","r") as spider_config_file:
-			crawl_request = spider_config_file.read().replace('\n', '')
-		updated_request_json = {}
-		crawl_request_json = json.loads(str(crawl_request))
-		crawl_request_json['allowed_domains'] = []
-		if 'start_urls' in crawl_request_json and crawl_request_json['start_urls'] is not None:
-			for url in crawl_request_json['start_urls']:
-				updated_request_json = parse_domain(url, crawl_request_json)
-			crawl_request_json['spider'] = 'ziprecruter'
-		print(updated_request_json)
-		currentJob = updated_request_json
-
-		deferred = runner.crawl(currentJob['spider'], currentJob)
-
-		logger.info('ziprecruter job added')
-
-		with open("/home/lenovo/projects_python/indeed_new_1/scrapy_config/dice",
-		          "r") as spider_config_file:
-			crawl_request = spider_config_file.read().replace('\n', '')
-		updated_request_json = {}
-		crawl_request_json = json.loads(str(crawl_request))
-		crawl_request_json['allowed_domains'] = []
-		if 'start_urls' in crawl_request_json and crawl_request_json['start_urls'] is not None:
-			for url in crawl_request_json['start_urls']:
-				updated_request_json = parse_domain(url, crawl_request_json)
-			crawl_request_json['spider'] = 'Dice'
-		print(updated_request_json)
-		currentJob = updated_request_json
-		deferred = runner.crawl(currentJob['spider'], currentJob)
-
-		logger.info('Dice job is added')
 
 		d = runner.join()
 		d.addBoth(lambda _: reactor.stop())
@@ -131,10 +74,10 @@ def startCrawl():
 			crawler1 =list(runner.crawlers)[1]
 			crawler2 = list(runner.crawlers)[2]
 			crawler3 = list(runner.crawlers)[3]
-			crawler4 = list(runner.crawlers)[4]
+			'''crawler4 = list(runner.crawlers)[4]'''
 
 	except Exception as e:
-		logger.error('crawler handler|spider : %s|error : %s',crawl_request['spider'],e)
+		logger.error('crawler handler|error : %s',e)
 
 
 
@@ -249,7 +192,7 @@ def getCrawlStatus():
 			scrapy_response_zip['status'] = 'RUNNING'
 			crawler_status[scrapy_response_zip['spider']] = scrapy_response_zip
 
-		if 'finish_time' in crawler4.stats.get_stats().keys():
+		'''if 'finish_time' in crawler4.stats.get_stats().keys():
 
 			temp_response = scrapy_response_dice1.copy()
 			current_time = crawler4.stats.get_stats()['finish_time']
@@ -270,7 +213,7 @@ def getCrawlStatus():
 			scrapy_response_dice['speed'] = speed
 			scrapy_response_dice['start_time'] = str(scrapy_response_dice.get('start_time'))
 			scrapy_response_dice['status']='RUNNING'
-			crawler_status[scrapy_response_dice['spider']] = scrapy_response_dice
+			crawler_status[scrapy_response_dice['spider']] = scrapy_response_dice'''
 
 
 	else:
@@ -284,3 +227,29 @@ def parse_domain(url, crawl_request_json):
 	domains = urlparse(url).netloc
 	crawl_request_json['allowed_domains'].append(domains)
 	return crawl_request_json
+
+
+def add_spider_to_job(filename,spider):
+
+	global path
+	filepath = path+filename
+	with open(filepath,"r") as spider_config_file:
+		crawl_request = spider_config_file.read().replace('\n', '')
+	updated_request_json = {}
+	crawl_request_json = json.loads(str(crawl_request))
+	crawl_request_json['spider'] = spider
+
+
+	if 'start_urls' in crawl_request_json and crawl_request_json['start_urls'] is not None:
+		crawl_request_json['allowed_domains'] = []
+		for url in crawl_request_json['start_urls']:
+			updated_request_json = parse_domain(url, crawl_request_json)
+
+	if len(updated_request_json) is not 0:
+		currentJob = updated_request_json
+	else:
+		currentJob = crawl_request_json
+	print(currentJob)
+	deferred = runner.crawl(currentJob['spider'], currentJob)
+
+	logger.info('%s job added',spider)
