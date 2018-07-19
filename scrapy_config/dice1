@@ -1,5 +1,5 @@
 {
-   "start_urls":["https://www.dice.com/jobs/l-Albany%2C+NY-jobs"],
+   "start_urls":["https://www.dice.com/jobs/browsejobs"],
    "website_name":"dice",
    "urlPattern" : [ 
     {
