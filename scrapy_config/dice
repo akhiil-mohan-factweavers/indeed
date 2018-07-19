@@ -8,7 +8,7 @@
                       "company" : "name" ,
                       "posted_date"  : "posted hidden-xs",
 		      "posted_by" :"contact-name",
-		      "jobtype"  : "not given",
+		      "jobtype"  : "input#empTypeSSDL",
 		      "salary"  : "not given",
 		      "summary" : "not given",
 		      "applylink": "not given"

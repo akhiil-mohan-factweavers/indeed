@@ -6,7 +6,7 @@
         "jobtitle" : "h3 pb col big no-mb",
         "location" : "fl-r fl-n-mobile" ,
 	"company"  : "no-mb",
-	"jobtype"  : "fl-l fl-n-mobile",
+	"jobtype"  : "div.fl-l.fl-n-mobile",
 	"applylink": "btn btn-apply",
 	"salary"  : "not given",
 	"posted_date":"not given",
