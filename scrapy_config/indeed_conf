@@ -30,19 +30,7 @@
    {
 	    "jobpage" :"no",
             "pattern" : ["https://www.indeed.co.in/viewjob" ,"https://www.indeed.co.in/cmp/"],
-            "followOnly" :"false",
-            "fields" : {
-                     "jobtitle" : "jobtitle",
-                     "location" : "location" ,
-                      "company" : "company" ,
-                      "salary"  : "no-wrap",
-		      "posted_date":"date",
-		      "summary" : "summary",
-		      "jobtype":"not given",
-		      "posted_by":"not given",
-		      "applylink":"not given"
-        	       },
-	    "tags_name" : ["class","class","class","class","class","class","class","class"]
+            "followOnly" :"false"
    }
  ]
 }

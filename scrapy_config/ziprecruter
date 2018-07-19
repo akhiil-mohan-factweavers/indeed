@@ -1,5 +1,5 @@
 {
-   "start_urls":["https://www.ziprecruiter.com/jobs/zenith-acquisitions-0a7a0ece/sales-and-customer-service-representative-full-time-93557763"],
+   "start_urls":["https://www.ziprecruiter.com/browse/states"],
    "website_name":"ziprecruiter",
    "urlPattern" : [ 
     {
@@ -21,19 +21,7 @@
    {
             "jobpage" :"no",
             "pattern" : ["https://www.ziprecruiter.com/jobs/"],
-            "followOnly" :"false",
-             "fields" : {
-        		"jobtitle" : "job_title",
-        		"location" : "address" ,
-	 		"company" : "job_details_link",
-			"salary"  : "not given",
-			"posted_date":"data",
-		        "summary" : "summary",
-			"jobtype" : "span.t_employment_type",
-			"posted_by":"not given",
-			"applylink":"not given"
-			 },
-	    "tags_name" : ["class","class","itemprop","class","class","class","class","class"]
+            "followOnly" :"false"
    },
    {
 	    "jobpage" :"yes",

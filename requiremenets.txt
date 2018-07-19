@@ -3,3 +3,4 @@ scrapy-kafka-export
 scrapy-redis
 tornado
 bs4
+pygrok

@@ -5,10 +5,11 @@ import urllib
 
 import scrapy
 from bs4 import BeautifulSoup
+from pygrok import Grok
 from scrapy.utils.log import logger
 
 
-def parse_links(crawl_request, response, response_value, tags):
+def parse_links(crawl_request, response, response_value):
 	links = []
 	links_html = []
 	urlPatterns = crawl_request.get('urlPattern', None)
@@ -55,12 +56,12 @@ def parse_links(crawl_request, response, response_value, tags):
 				return {'type': 'links', 'content': links}
 			else:
 
-				temp_crawl_request = {'fields': urlPattern['fields'], 'spider': crawl_request['spider'],
+				temp_crawl_request = {'spider': crawl_request['spider'],
 				                      'urlPattern': urlPattern['pattern'],
 				                      'website_name': crawl_request['website_name'],
-				                      'tags_name': urlPattern['tags_name']}
+				                      }
 				item = {}
-				item = parse_fields(temp_crawl_request, response, response_value, tags)
+				item = parse_fields(temp_crawl_request, response, response_value)
 				print('items::::::::::', item)
 				return {'type': 'items', 'content': item}
 
@@ -71,99 +72,161 @@ def url_lib_request(url):
 	return soup
 
 
-def parse_fields(crawl_request, response, response_value, tags):
-	item = {}
-	fields = crawl_request.get('fields', None)
-	tags_name = crawl_request.get('tags_name', None)
-	response_html = response.body.decode("utf-8")
-	soup = BeautifulSoup(response_html, "html.parser")
+def parse_fields(crawl_request, response, response_value):
 	for url_pattern in crawl_request['urlPattern']:
 		response_value = str(response.url).find(url_pattern)
 
 		if response_value >= 0:
 			break
 	if response_value >= 0:
-		try:
-			flag_status = 0
+		response_html = response.text
+		flag_status = 0
+		soup = BeautifulSoup(response_html, "html.parser")
+		if crawl_request['spider'] == 'Dice1' or crawl_request['spider'] == 'Dice':
+			parsedJSON = dice_feild_parse(soup)
+			parsedJSON['website_name']='Dice'
+			flag_status = 1
+		elif crawl_request['spider'] == 'ziprecruter':
+			parsedJSON = ziprecruter_description_parse(soup)
+			parsedJSON['website_name'] = 'Ziprecruter'
+			flag_status = 1
 
-			if soup.find(tags[0], {tags_name[0]: fields['company']}):
-				item['company'] = soup.find(tags[0], {tags_name[0]: fields['company']}).text.strip()
-				flag_status = flag_status + 1
-
-			if soup.find(tags[1], {tags_name[1]: fields['jobtitle']}):
-				item['jobtitle'] = soup.find(tags[1], {tags_name[1]: fields['jobtitle']}).text.strip()
-				flag_status = flag_status + 1
-
-			if soup.find(tags[2], {tags_name[2]: fields['location']}):
-				item['location'] = soup.find(tags[2], {tags_name[2]: fields['location']}).text.strip()
-				flag_status = flag_status + 1
-
-			if soup.find(tags[3], {tags_name[3]: fields['salary']}):
-				item['compensation'] = soup.find(tags[3], {tags_name[3]: fields['salary']}).text.strip()
-				flag_status = flag_status + 1
-
-			if soup.find(tags[4], {tags_name[4]: fields['posted_date']}):
-				item['posted'] = soup.find(tags[4], {tags_name[4]: fields['posted_date']}).text.strip()
-				flag_status = flag_status + 1
-
-			if soup.select(fields['jobtype']):
-				job_type = soup.select(fields['jobtype'])
-				if crawl_request['spider'] == 'Dice' or crawl_request['spider'] == 'Dice1':
-					item['employment_type'] = job_type[0].get('value').strip()
-					flag_status = flag_status + 1
-				elif crawl_request['spider'] == 'sitemapspider':
-					item['employment_type'] = job_type[0].text.strip()
-					flag_status = flag_status + 1
-				elif crawl_request['spider'] == 'ziprecruter':
-					item['employment_type'] = job_type[0].text.strip()
-					flag_status = flag_status + 1
-
-			if soup.find(tags[6], {tags_name[6]: fields['applylink']}):
-				apply_link = soup.find('a', {'class': fields['applylink']})['href']
-				item['Link/Mechanism_to_apply_the_job'] = response.urljoin(apply_link)
-				flag_status = flag_status + 1
-
-			if soup.find(tags[7], {tags_name[7]: fields['posted_by']}):
-				item['posted_by'] = soup.find(tags[7], {tags_name[7]: fields['posted_by']}).text.strip()
-				flag_status = flag_status + 1
-
-			if flag_status > 1:
-				item['website_name'] = crawl_request['website_name']
-				item['date_of_scraped'] = str(datetime.datetime.utcnow())
-				item['url'] = response.url
-
-			if crawl_request.get('spider') == 'ziprecruter':
-				item, flag_status = ziprecruter_description_parse(soup, item, flag_status)
-
-			if crawl_request.get('spider') == 'Dice' or crawl_request.get('spider') == 'Dice1':
-				item, flag_status = dice_description_parse(soup, item, flag_status)
+		elif crawl_request['spider'] == 'job_scrapper':
+			parsedJSON = indeed_field_parse(soup)
+			parsedJSON['website_name'] = 'Indeed'
+			flag_status = 1
+		if flag_status == 1:
+			parsedJSON['date_of_scraped'] = str(datetime.datetime.utcnow())
+			parsedJSON['url'] = response.url
+			#parsedJSON['page_html'] = str(response.text)
+			return parsedJSON
 
 
+def ziprecruter_description_parse(soup):
 
+	patterns = {
+		"postedDate": Grok("Posted date:")
+	}
 
-		except Exception as e:
-			logger.error('parse_items|spider :%s|error : %s', crawl_request['spider'], e)
-	return item
+	title = soup.find_all('h1', class_='job_title')
+	company = soup.find_all('span', class_='hiring_company_text t_company_name')
+	location = soup.find_all('span', itemprop='address')
+	compensation = soup.find_all('span', class_='t_compensation')
+	employmentType = soup.find_all('span', class_='t_employment_type')
 
+	parsedJSON = {}
+	parsedJSON["title"] = title[0].get_text().strip() if title else None
+	parsedJSON["company"] = company[0].get_text().strip() if company else None
+	parsedJSON["location"] = location[0].get_text().strip() if location else None
+	parsedJSON["salary"] = compensation[0].get_text().strip() if compensation else None
+	parsedJSON["employment_type"] = employmentType[0].get_text().strip() if employmentType else None
 
-def ziprecruter_description_parse(soup, item, flag_status):
 	job_divs = soup.find_all('div', class_='jobDescriptionSection')
-	for div in job_divs:
-		ptags = ""
-		ptag = div.select('div p')
-		for p in ptag:
-			ptags = ptags + p.get_text()
-		item["jobDescription"] = ptags
-		flag_status = flag_status + 1
+	if job_divs:
+		for div in job_divs:
+			ptags = ""
+			ptag = div.select('div p')
+			for p in ptag:
+				ptags = ptags + p.get_text()
+			parsedJSON["job_description"] = ptags
 
-	return item,flag_status
+	job_more = (soup.find_all('p', class_='job_more'))
+	posted = job_more[1].find_all('span', class_='data')
+	parsedJSON["posted"] = posted[0].get_text().strip() if posted else None
 
-def dice_description_parse(soup, item, flag_status):
-	jobDescription = soup.find_all('div',{'itemprop':'description'})
-	if jobDescription:
-		item["job_description"] = jobDescription[0].get_text().strip()
-		flag_status = flag_status + 1
-
-	return item, flag_status
+	return parsedJSON
 
 
+
+def dice_feild_parse(soup):
+
+	title = soup.find_all('h1', class_='jobTitle')
+	#url = soup.select("link[rel=canonical]")
+	company = soup.find_all('span', itemprop="name")
+	location = soup.find_all('li', class_='location', itemprop="joblocation")
+	skills = soup.find_all('div', class_="iconsiblings")
+	employmentType = soup.select("input#empTypeSSDL")
+	posted = soup.find_all('li', class_="posted hidden-xs")
+	jobDescription = soup.find_all('div', itemprop="description")
+
+	parsedJSON = {}
+	parsedJSON["jobtitle"] = title[0].get_text().strip() if title else None
+	#parsedJSON["url"] = url[0].get('href') if url else None
+	parsedJSON["company"] = company[0].get_text().strip() if company else None
+	parsedJSON["location"] = location[0].get_text().strip() if location else None
+	# parsedJSON["skills"] = skills[0].get_text().strip() if skills else None
+	parsedJSON["employment_type"] = employmentType[0].get('value') if employmentType else None
+	parsedJSON["posted"] = posted[0].get_text().strip() if posted else None
+	parsedJSON["job_description"] = jobDescription[0].get_text().strip() if posted else None
+	parsedJSON["website_name"] = "Dice"
+
+	return parsedJSON
+
+def indeed_field_parse(soup):
+
+	patterns = {
+		"salary": Grok("Salary: %{DATA:fromAmount} to %{DATA:toAmount}/%{WORD:granularity}"),
+		"salary": Grok("Salary: %{GREEDYDATA:salary}"),
+		"jobType": Grok("Job Type: %{NOTSPACE:jobType}"),
+		"employmentType": Grok("Employment Type : %{NOTSPACE:employmentType}")
+	}
+
+	title = soup.find_all('b', class_='jobtitle')
+	company = soup.find_all('span', class_='company')
+	location = soup.find_all('span', class_='location')
+	posted = soup.find_all('span', class_='date')
+
+	### Common field parsing
+
+	parsedJSON = {}
+	parsedJSON["title"] = title[0].get_text() if title else None
+	parsedJSON["company"] = company[0].get_text() if company else None
+	parsedJSON["location"] = location[0].get_text() if location else None
+	parsedJSON["posted"] = posted[0].get_text() if posted else None
+
+	### Parsing Salary and Employment type
+
+	parsedJSON["salary"] = None
+	parsedJSON["employment_type"] = None
+	job_summary = soup.select('span#job_summary p')
+
+	if job_summary:
+		for p in job_summary:
+			for pattern in patterns:
+				matched = patterns[pattern].match(p.get_text())
+				if matched is not None:
+					for key in matched.keys():
+						parsedJSON[key] = matched[key]
+
+	salaryType = soup.find_all('span', class_='no-wrap')
+	if parsedJSON["salary"] is None:
+		parsedJSON["salary"] = salaryType[0].get_text().strip().replace(" -", "") if salaryType else None
+	if parsedJSON["employment_type"] is None:
+		parsedJSON["employment_type"] = salaryType[1].get_text().strip() if salaryType else None
+
+	# Parsing Job Description
+
+	### Case1
+	job_description = ""
+	job_description = soup.select('span#job_summary > p')
+	if job_description:
+		job_description[0].get_text()
+		parsedJSON["job_description"] = job_description[0].get_text().strip()
+
+
+	### Case 2
+	job_description_ptag = soup.select('span#job_summary > p')
+	job_description_div = soup.select('span#job_summary div')
+	if job_description_ptag and job_description_div:
+		job_description = job_description_ptag[0].get_text() + job_description_div[0].get_text()
+		parsedJSON["job_description"] = job_description
+
+	### Case3
+	job_description = soup.find_all('span', class_='summary')
+	if job_description:
+		job_description_br = job_description[0].find_all('br')
+		if job_description_br:
+			parsedJSON["job_description"] = job_description_br[0].get_text()
+
+
+	return parsedJSON

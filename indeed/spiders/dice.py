@@ -33,8 +33,7 @@ class MySpider(SitemapSpider):
 		self.crawler.stats.set_value('spider', 'Dice')
 		response_value = -2
 		temp = {'urls': []}
-		tags = ['span', 'h1', 'li', 'li', 'li', 'span', 'span', 'span', 'h4']
-		item = parse_fields(self.crawl_request, response, response_value, tags)
+		item = parse_fields(self.crawl_request, response, response_value)
 		if len(item) is not 0:
 			yield item
 		for link in LxmlLinkExtractor(allow_domains=self.allowed_domains).extract_links(response):

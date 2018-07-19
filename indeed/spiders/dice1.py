@@ -35,10 +35,8 @@ class IndeedSpider(scrapy.Spider):
 		logger.info('dice|url in parse : %s', response.url)
 		self.crawler.stats.inc_value('completed_url', 1)
 		self.crawler.stats.set_value('spider','dice')
-
-		tags = ['span', 'h1', 'li', 'li', 'li', 'span', 'span', 'span', 'h4']
 		response_value = -2
-		parse_response = parse_links(self.crawl_request, response, response_value, tags)
+		parse_response = parse_links(self.crawl_request, response, response_value)
 		print(parse_response)
 		if parse_response is not None:
 			if parse_response['type'] == 'links':

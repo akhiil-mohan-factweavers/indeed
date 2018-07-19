@@ -1,5 +1,5 @@
 {
-   "start_urls":["https://www.dice.com/jobs/detail/Project-Manager-NIC-Inc-Indianapolis-IN-46201/10119425/1039?icid=sr1-1p&q=Project+Management&l=Indianapolis,%20IN"],
+   "start_urls":["https://www.dice.com/jobs/browsejobs"],
    "website_name":"dice",
    "urlPattern" : [ 
     {
@@ -23,19 +23,7 @@
    {
 	    "jobpage" :"no",
             "pattern" : ["https://www.dice.com/jobs/detail/"],
-            "followOnly" :"false",
-            "fields" : {
-                     "jobtitle" : "jobTitle",
-                     "location" : "location" ,
-                      "company" : "name" ,
-                      "posted_date"  : "posted hidden-xs",
-		      "posted_by" :"contact-name",
-		      "jobtype"  : "input#empTypeSSDL",
-		      "salary"  : "not given",
-		      "summary" : "not given",
-		      "applylink": "not given"
-			},
-	    "tags_name" : ["itemprop","class","class","class","class","class","class","id"]
+            "followOnly" :"false"
    }
  ]
 }
