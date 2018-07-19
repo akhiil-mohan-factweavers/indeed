@@ -39,7 +39,10 @@ def parse_links(crawl_request, response, response_value):
 								links.append(sel_html.a['href'])
 						else:
 							links.append(sel_html['href'])
-
+							if crawl_request['spider'] == 'Dice1' or crawl_request['spider'] == 'Dice':
+								if soup.find('link', {'rel': 'next'}):
+									links.append(soup.find('link', {'rel': 'next'})['href']
+)
 					if crawl_request['spider'] == 'job_scrapper':
 						pagination = soup.find('div', {'class': 'pagination'})
 						links_html = pagination.find_all('a', href=True)
