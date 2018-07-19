@@ -108,7 +108,7 @@ def parse_fields(crawl_request, response, response_value):
 		if flag_status == 1:
 			parsedJSON['date_of_scraped'] = str(datetime.datetime.utcnow())
 			parsedJSON['url'] = response.url
-			#parsedJSON['page_html'] = str(response.text)
+			parsedJSON['page_html'] = str(response.text)
 			return parsedJSON
 
 
