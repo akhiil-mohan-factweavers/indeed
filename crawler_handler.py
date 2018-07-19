@@ -58,7 +58,7 @@ def startCrawl():
 	try:
 		add_spider_to_job("indeed_conf",'job_scrapper')
 		add_spider_to_job("ziprecruter", 'ziprecruter')
-		#add_spider_to_job("career_builder",'sitemapspider')
+		add_spider_to_job("career_builder",'sitemapspider')
 		add_spider_to_job("dice1", 'Dice1')
 
 		d = runner.join()
@@ -71,7 +71,7 @@ def startCrawl():
 			crawler = list(runner.crawlers)[0]
 			crawler1 = list(runner.crawlers)[1]
 			crawler2 = list(runner.crawlers)[2]
-			#crawler3 = list(runner.crawlers)[3]
+			crawler3 = list(runner.crawlers)[3]
 			'''crawler4 = list(runner.crawlers)[4]'''
 
 	except Exception as e:
@@ -160,7 +160,7 @@ def getCrawlStatus():
 			scrapy_response_career['status'] = 'RUNNING'
 			crawler_status[scrapy_response_career['spider']] = scrapy_response_career
 
-		'''if 'finish_time' in crawler3.stats.get_stats().keys():
+		if 'finish_time' in crawler3.stats.get_stats().keys():
 
 			temp_response = scrapy_response_zip1.copy()
 			current_time = crawler3.stats.get_stats()['finish_time']
@@ -185,7 +185,7 @@ def getCrawlStatus():
 			scrapy_response_zip['status'] = 'RUNNING'
 			crawler_status[scrapy_response_zip['spider']] = scrapy_response_zip
 
-		if 'finish_time' in crawler4.stats.get_stats().keys():
+		'''if 'finish_time' in crawler4.stats.get_stats().keys():
 
 			temp_response = scrapy_response_dice1.copy()
 			current_time = crawler4.stats.get_stats()['finish_time']

@@ -98,10 +98,17 @@ def parse_fields(crawl_request, response, response_value):
 			parsedJSON = indeed_field_parse(soup)
 			parsedJSON['website_name'] = 'Indeed'
 			flag_status = 1
+
+		elif crawl_request['spider'] == 'sitemapspider':
+			parsedJSON = careerbuider_field_parse(soup)
+			parsedJSON['website_name'] = 'Careerbuilder'
+			print('hai')
+			flag_status = 1
+
 		if flag_status == 1:
 			parsedJSON['date_of_scraped'] = str(datetime.datetime.utcnow())
 			parsedJSON['url'] = response.url
-			parsedJSON['page_html'] = str(response.text)
+			#parsedJSON['page_html'] = str(response.text)
 			return parsedJSON
 
 
@@ -233,3 +240,33 @@ def indeed_field_parse(soup):
 
 
 	return parsedJSON
+
+def careerbuider_field_parse(soup):
+
+	title_company_data = soup.find_all('h1', class_='h3 pb col big no-mb')
+	employment_type = soup.find_all('div', class_='fl-l fl-n-mobile')
+	location = soup.find_all('div', class_='fl-r fl-n-mobile')
+
+	parsedJSON = {}
+	parsedJSON["title"] = title_company_data[0].get_text().split('posted by')[0] if title_company_data else None
+	parsedJSON["company"] = title_company_data[0].get_text().split('posted by')[
+		1].strip() if title_company_data else None
+	parsedJSON["employment_type"] = employment_type[0].get_text() if employment_type else None
+	parsedJSON["location"] = location[0].get_text() if location else None
+
+	#print(soup.find_all('div', class_='fl-r fl-n-mobile')[1].get_text())
+
+	job_description = ""
+	for descp in soup.select('div#job-description ul'):
+		job_description = job_description + descp.get_text().strip() + '.'
+
+	if job_description == "":
+		for descp in soup.select('div#job-description'):
+			job_description = job_description + descp.get_text() + '.'
+
+	parsedJSON["job_description"] = job_description
+
+	return parsedJSON
+
+
+
