@@ -14,6 +14,8 @@ config = configparser.RawConfigParser()
 config.read('scrapy.cfg')
 
 BOT_NAME = 'indeed'
+REDIS_HOSTNAME = config.get('Redis', 'REDIS_HOST')
+REDIS_PORT_NUMBER  =config.get('Redis','REDIS_PORT')
 
 SPIDER_MODULES = ['indeed.spiders']
 NEWSPIDER_MODULE = 'indeed.spiders'
@@ -68,8 +70,8 @@ ITEM_PIPELINES = {
 #REDIS_ITEMS_SERIALIZER = 'json.dumps'
 
 # Specify the host and port to use when connecting to Redis (optional).
-#REDIS_HOST = 'localhost'
-#REDIS_PORT = 6379
+REDIS_HOST = REDIS_HOSTNAME
+REDIS_PORT = REDIS_PORT_NUMBER
 
 # Specify the full Redis URL for connecting (optional).
 # If set, this takes precedence over the REDIS_HOST and REDIS_PORT settings.
