@@ -4,3 +4,5 @@ scrapy-redis
 tornado
 bs4
 pygrok
+multiprocessing
+joblib

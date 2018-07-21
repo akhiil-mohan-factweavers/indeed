@@ -11,6 +11,7 @@ from scrapy.crawler import CrawlerRunner, CrawlerProcess
 from scrapy.settings import Settings
 
 import crawler_handler
+from handlers.get_all_crawl_status import GetAllCrawlerStats
 from handlers.get_crawl_status import GetCrawlerStats
 from indeed import settings as my_settings
 from indeed.spiders.indeed import IndeedSpider
@@ -19,6 +20,8 @@ from indeed.spiders.indeed import IndeedSpider
 class JobScrapper(tornado.web.Application):
 	request_url_patterns = [
 		(r"/getCrawlStatus", GetCrawlerStats),
+		(r"/getAllCrawlStatus", GetAllCrawlerStats)
+
 	]
 
 	def __init__(self):

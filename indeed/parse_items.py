@@ -45,10 +45,11 @@ def parse_links(crawl_request, response, response_value):
 )
 					if crawl_request['spider'] == 'job_scrapper':
 						pagination = soup.find('div', {'class': 'pagination'})
-						links_html = pagination.find_all('a', href=True)
-						for link_html in links_html:
-							if link_html['href'] not in links:
-								links.append(link_html['href'])
+						if pagination:
+							links_html = pagination.find_all('a', href=True)
+							for link_html in links_html:
+								if link_html['href'] not in links:
+									links.append(link_html['href'])
 				else:
 					sel_html = soup.find(urlPattern['css-sel'],
 					                     {urlPattern['tag-name']: urlPattern['extrackURLFrom']})
@@ -114,10 +115,6 @@ def parse_fields(crawl_request, response, response_value):
 
 def ziprecruter_description_parse(soup):
 
-	patterns = {
-		"postedDate": Grok("Posted date:")
-	}
-
 	title = soup.find_all('h1', class_='job_title')
 	company = soup.find_all('span', class_='hiring_company_text t_company_name')
 	location = soup.find_all('span', itemprop='address')
@@ -147,7 +144,6 @@ def ziprecruter_description_parse(soup):
 	return parsedJSON
 
 
-
 def dice_feild_parse(soup):
 
 	title = soup.find_all('h1', class_='jobTitle')
@@ -172,13 +168,12 @@ def dice_feild_parse(soup):
 
 	return parsedJSON
 
+
 def indeed_field_parse(soup):
 
 	patterns = {
-		"salary": Grok("Salary: %{DATA:fromAmount} to %{DATA:toAmount}/%{WORD:granularity}"),
 		"salary": Grok("Salary: %{GREEDYDATA:salary}"),
-		"jobType": Grok("Job Type: %{NOTSPACE:jobType}"),
-		"employmentType": Grok("Employment Type : %{NOTSPACE:employmentType}")
+		"employment_type": Grok("Job Types: %{GREEDYDATA:employment_type}")
 	}
 
 	title = soup.find_all('b', class_='jobtitle')
@@ -240,6 +235,7 @@ def indeed_field_parse(soup):
 
 
 	return parsedJSON
+
 
 def careerbuider_field_parse(soup):
 
